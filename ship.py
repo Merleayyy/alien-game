@@ -44,6 +44,7 @@ class Ship():
 class Charector(object):
 	"""docstring for Charctor"""
 	def __init__(self, screen):
+		# 获取屏幕和图片的尺寸，便于确定图片在屏幕中的位置
 		self.screen = screen
 		self.image = pygame.image.load('images/2b.jpg')
 		self.rect = self.image.get_rect()
