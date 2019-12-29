@@ -9,7 +9,7 @@ class Settings():
 		self.screen_height = 900
 		self.bg_color = (20, 90, 160)
 		# 设置飞船速度
-		self.ship_speed = 7.1
+		self.ship_speed = 3
 
 		#子弹设置
 		self.bullet_speed_factor = 1
