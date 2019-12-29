@@ -16,3 +16,10 @@ class Settings():
 		self.bullet_width = 3
 		self.bullet_height = 15
 		self.bullet_color = 60, 60, 60
+		self.bullets_allowed = 3
+
+		# # 计数板设置
+		# self.border_x = 1500
+		# self.border_y = 100
+		# self.border_width = 100
+		# self.border_height = 100

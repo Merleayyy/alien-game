@@ -20,6 +20,10 @@ class Bullet(Sprite):
 		self.y = float(self.rect.y)
 		self.color = ai_sittings.bullet_color
 		self.speed_factor = ai_sittings.bullet_speed_factor
+
+		# 创建一个用于显示可用子弹数的计数板
+		# self.counting_border = pygame.Rect(ai_sittings.border_x, ai_sittings.border_y, 
+		# 	ai_sittings.border_width, ai_sittings.border_height)
 	
 	def update(self):
 		# 想上移动子弹

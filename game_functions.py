@@ -23,8 +23,13 @@ def check_keydown_events(event, ship, ai_settings, screen, bullets):
 
 	elif event.key == pygame.K_SPACE:
 		# 创建一颗子弹，并将其加入到编组bullet中
+		fire_bullet(ai_settings, screen, ship, bullets)
+
+def fire_bullet(ai_settings, screen, ship, bullets):
+	if len(bullets) < ai_settings.bullets_allowed:
 		new_bullet = Bullet(ai_settings, screen, ship)
 		bullets.add(new_bullet)
+
 
 def check_keyup_events(event, ship):
 	if event.key == pygame.K_RIGHT:
@@ -45,3 +50,14 @@ def update_screen(ai_settings, screen, ship, bullets):
 	# fighter.blitme()
 	# 让最近绘制的屏幕可见
 	pygame.display.flip() # 使用之前设置好的属性，一遍一遍绘制图像
+
+def update_bullets(bullets):
+	# 更新子弹的位置，并且删除已经消失的子弹
+	#使子弹移动
+	bullets.update()
+
+	# 删除已经消失的子弹
+	for bullet in bullets.copy():# 遍历保存子弹的编组，检索其是否已经射出屏幕
+		if bullet.rect.bottom <= 0:
+			bullets.remove(bullet)
+	print(len(bullets))
