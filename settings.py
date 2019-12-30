@@ -23,3 +23,6 @@ class Settings():
 		# self.border_y = 100
 		# self.border_width = 100
 		# self.border_height = 100
+
+		# 外星人飞船的属性
+		self.alien_speed_factor = 0.2

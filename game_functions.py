@@ -2,6 +2,9 @@
 import sys
 import pygame
 from bullet import Bullet
+import random
+from alien import Alien
+import time
 def check_event(ai_settings, screen, ship, bullets):
 	# 响应按键和鼠标的事件
 	for event in pygame.event.get():
@@ -24,13 +27,32 @@ def check_keydown_events(event, ship, ai_settings, screen, bullets):
 	elif event.key == pygame.K_SPACE:
 		# 创建一颗子弹，并将其加入到编组bullet中
 		fire_bullet(ai_settings, screen, ship, bullets)
-
+# 发射子弹，按空格后创建一个子弹类
 def fire_bullet(ai_settings, screen, ship, bullets):
 	if len(bullets) < ai_settings.bullets_allowed:
 		new_bullet = Bullet(ai_settings, screen, ship)
 		bullets.add(new_bullet)
 
+def show_aliens(ai_settings, aliens, screen, sec, counter):
+	current_time = time.localtime(time.time())
+	current_time = time.strftime('%S', current_time)
+	current_time = int(current_time)
+	# print(current_time)
+	print(sec)
+	if current_time == sec + 3:
+		new_alien = Alien(ai_settings, screen)
+		aliens.add(new_alien)
+		sec = current_time
+		print("创建一个外星人")
+		if sec == 57:
+			sec = 0
+			return sec
+		return sec
+	return sec
 
+
+
+# 监听鼠标回落的事件
 def check_keyup_events(event, ship):
 	if event.key == pygame.K_RIGHT:
 		ship.moving_right = False
@@ -38,12 +60,15 @@ def check_keyup_events(event, ship):
 	if event.key == pygame.K_LEFT:
 		ship.moving_left = False
 
-def update_screen(ai_settings, screen, ship, bullets):
+def update_screen(ai_settings, screen, ship, bullets, aliens):
 	# 每次循环时都设置屏幕为bg_color的颜色
 	screen.fill(ai_settings.bg_color)
 
 	for bullet in bullets.sprites():
 		bullet.draw_bullet()
+
+	for alien in aliens.sprites():
+		alien.blitme()
 
 	# 在屏幕上绘制飞船的图片
 	ship.blitme()
@@ -60,4 +85,12 @@ def update_bullets(bullets):
 	for bullet in bullets.copy():# 遍历保存子弹的编组，检索其是否已经射出屏幕
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
-	print(len(bullets))
+	# print(len(bullets))
+
+def update_aliens(aliens):
+	aliens.update()
+
+	# 删除已经消失的外星人
+	for alien in aliens.copy():# 遍历保存子弹的编组，检索其是否已经射出屏幕
+		if alien.rect.top > 900:
+			aliens.remove(alien)
