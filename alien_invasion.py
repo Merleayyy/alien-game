@@ -17,6 +17,8 @@ from alien import Alien
 
 import time
 
+from game_stats import GameStats
+
 def run_game():
 	# 初始化游戏并创建一个屏幕对象
 	pygame.init()
@@ -36,14 +38,13 @@ def run_game():
 	# 创建一个用于储存子弹的编组
 	bullets = Group()
 
-	# 创建一个2b
-	# fighter = Charector(screen)
-
 	localtime = time.localtime(time.time())
 	localtime = time.strftime('%S', localtime)
 	localtime = int(localtime)
 	counter = 0
 
+	# 创建一个用于储存游戏统计信息的实例
+	stats = GameStats(ai_settings)
 	# 开始游戏的主循环
 	while True:
 		
@@ -51,15 +52,26 @@ def run_game():
 		gf.check_event(ai_settings, screen, ship, bullets)
 
 
+		if stats.game_active:
+
 		# 生成外星人,每5秒生成一只外星人
-		localtime = gf.show_aliens(ai_settings, aliens, screen,
+			localtime = gf.show_aliens(ai_settings, aliens, screen,
 		 localtime, counter)
 
-		#创建好飞船之后更新飞船的坐标
-		ship.update()
 
-		gf.update_bullets(bullets)
-		gf.update_aliens(aliens)
+			#创建好飞船之后更新飞船的坐标
+			ship.update()
+
+			gf.update_bullets(aliens, bullets)
+
+			gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
+			if ai_settings.dead_alive == True:
+				current_time = time.localtime(time.time())
+				current_time = time.strftime('%S', current_time)
+				current_time = int(current_time)
+				localtime = current_time
+				ai_settings.dead_alive = False
+
 
 		# 刷新屏幕
 		gf.update_screen(ai_settings, screen, ship, bullets, aliens)

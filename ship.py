@@ -41,6 +41,9 @@ class Ship():
 		# 在指定位置绘制飞船
 		self.screen.blit(self.image, self.rect)
 
+	def center_ship(self):
+		self.center = self.screen_rect.centerx
+
 class Charector(object):
 	"""docstring for Charctor"""
 	def __init__(self, screen):
@@ -56,3 +59,5 @@ class Charector(object):
 	def blitme(self):
 		self.screen.blit(self.image, self.rect)
 		
+	def center_ship(self):
+		self.center = self.screen_rect.centerx

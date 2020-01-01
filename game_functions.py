@@ -5,6 +5,7 @@ from bullet import Bullet
 import random
 from alien import Alien
 import time
+from time import sleep
 def check_event(ai_settings, screen, ship, bullets):
 	# 响应按键和鼠标的事件
 	for event in pygame.event.get():
@@ -37,14 +38,13 @@ def show_aliens(ai_settings, aliens, screen, sec, counter):
 	current_time = time.localtime(time.time())
 	current_time = time.strftime('%S', current_time)
 	current_time = int(current_time)
-	# print(current_time)
-	print(sec)
+	print("当前时间为" + str(current_time))
+	print("开始时间为" + str(sec))
 	if current_time == sec + 3:
 		new_alien = Alien(ai_settings, screen)
 		aliens.add(new_alien)
 		sec = current_time
-		print("创建一个外星人")
-		if sec == 57:
+		if sec >= 57:
 			sec = 0
 			return sec
 		return sec
@@ -76,7 +76,7 @@ def update_screen(ai_settings, screen, ship, bullets, aliens):
 	# 让最近绘制的屏幕可见
 	pygame.display.flip() # 使用之前设置好的属性，一遍一遍绘制图像
 
-def update_bullets(bullets):
+def update_bullets(aliens, bullets):
 	# 更新子弹的位置，并且删除已经消失的子弹
 	#使子弹移动
 	bullets.update()
@@ -87,10 +87,34 @@ def update_bullets(bullets):
 			bullets.remove(bullet)
 	# print(len(bullets))
 
-def update_aliens(aliens):
+	# 检查是否有子弹击中了外星人
+	# 如果是这样，就删除了相应的子弹和外星人
+	collosions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+	# 
+
+def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
 	aliens.update()
 
 	# 删除已经消失的外星人
 	for alien in aliens.copy():# 遍历保存子弹的编组，检索其是否已经射出屏幕
 		if alien.rect.top > 900:
 			aliens.remove(alien)
+	# 检测外星人和飞船之间的碰撞
+	if pygame.sprite.spritecollideany(ship, aliens):
+		ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+		ai_settings.dead_alive = True
+
+def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+	# 响应被外星人撞到的飞船
+	if stats.ships_left > 0:
+		stats.ships_left -= 1
+		# 清空外星人列表和子弹列表
+		aliens.empty()
+		bullets.empty()
+
+		# 重置飞船位置
+		ship.center_ship()
+
+		sleep(1)
+	else:
+		stats.game_active =False

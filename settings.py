@@ -8,8 +8,9 @@ class Settings():
 		self.screen_width = 1600
 		self.screen_height = 900
 		self.bg_color = (255, 255, 255)
-		# 设置飞船速度
+		# 设置飞船属性
 		self.ship_speed = 3
+		self.ship_limit = 3
 
 		#子弹设置
 		self.bullet_speed_factor = 1
@@ -25,4 +26,7 @@ class Settings():
 		# self.border_height = 100
 
 		# 外星人飞船的属性
-		self.alien_speed_factor = 0.2
+		self.alien_speed_factor = 2
+
+		# 判断是否死亡的标识
+		self.dead_alive = False
