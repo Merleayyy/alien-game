@@ -10,14 +10,14 @@ class Settings():
 		self.bg_color = (255, 255, 255)
 		# 设置飞船属性
 		self.ship_speed = 3
-		self.ship_limit = 3
+		self.ship_limit = 1
 
 		#子弹设置
 		self.bullet_speed_factor = 1
 		self.bullet_width = 3
 		self.bullet_height = 15
 		self.bullet_color = 60, 60, 60
-		self.bullets_allowed = 3
+		self.bullets_allowed = 50
 
 		# # 计数板设置
 		# self.border_x = 1500
@@ -30,3 +30,5 @@ class Settings():
 
 		# 判断是否死亡的标识
 		self.dead_alive = False
+
+		# 积分版属性

@@ -24,7 +24,7 @@ class Alien(Sprite):
 
 		# 将每艘新外星人放到屏幕之外
 		self.rect.top = -self.rect.height #设置图片矩形的位置
-		self.start = False
+		self.start = False # 检测外星人是否开始下落
 		self.alien_number = 0
 
 
