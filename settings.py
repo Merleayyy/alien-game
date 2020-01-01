@@ -7,7 +7,7 @@ class Settings():
 		# 屏幕的设置
 		self.screen_width = 1600
 		self.screen_height = 900
-		self.bg_color = (20, 90, 160)
+		self.bg_color = (255, 255, 255)
 		# 设置飞船速度
 		self.ship_speed = 3
 
